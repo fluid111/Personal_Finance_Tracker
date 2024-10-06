@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+{% if searchedItems %}
+{% comment %} <a href="{% url 'buy_book' pk=each_book.pk %}"> {% endcomment %} 
+    {% for searchI in searchedItems %} 
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Date</th>
+                <th scope="col">Description</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Category</th>
+            </tr>
+        </thead>
+        <tbody id = "tableBody" class="table-group-divider">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">{{searchI.date}} </th>
+                    <th scope="col">{{searchI.description}}</th>
+                    <th scope="col">{{searchI.amount}}</th>
+                    <th scope="col">{{searchI.category}}</th>
+                </tr>
+            </tbody>
+        </table>
+    {% comment %} <a href="">
+        <p>{{searchI.date}} <span>
+           {{searchI.description}}   
+        </span></p>   
+    </a> {% endcomment %}
+{% endfor %}
+{% else %}
+<p>
+"no result found
+</p> 
+{% endif %}
+{% endblock %}

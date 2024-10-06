@@ -30,11 +30,20 @@
                 <a class="navbar-brand btn btn-primary" href="#">Edit</a>
                 <a class="navbar-brand btn btn-primary" href="{% url 'category_chart_view' %}">Chart</a>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <form class="d-flex" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <form class="d-flex" method="GET" action="{% url 'searchTable' %}" role="search">
+                        <input class="form-control me-2" name="searchInput" type="search" placeholder="Search" aria-label="Search">
                         <button class="btn btn-outline-success me-3" type="submit">Search</button>
                     </form>
-            </div>
+                    {% comment %} {% if searchedItems %}
+                        <ul>
+                            {% for item in searchedItems %}
+                                <li>{{ item }}</li>  <!-- Adjust this according to your model fields -->
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>No results found.</p>
+                    {% endif %}
+            </div> {% endcomment %}
         </div>
         </div>
         <ul class=" left-side navbar-nav me-auto mb-2 mb-lg-0 ">

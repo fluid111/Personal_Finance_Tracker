@@ -16,25 +16,6 @@ from api.models import Data
 def list(request):
     return render(request, 'table/index.html')
 
-# def chart_view(request):
-#     # Create the chart
-#     plt.figure(figsize=(10, 5))
-#     plt.plot([1, 2, 3], [1, 4, 9])
-#     plt.title('Example Chart')
-#     plt.xlabel('X-axis Label')
-#     plt.ylabel('Y-axis Label')
-
-#     # Save it to a BytesIO object
-#     buffer = BytesIO()
-#     plt.savefig(buffer, format='png')
-#     plt.close()
-#     buffer.seek(0)
-    
-#     # Encode to base64 for rendering in the template
-#     image_png = buffer.getvalue()
-#     graphic = base64.b64encode(image_png).decode('utf-8')
-#     return HttpResponse(f'<img src="data:image/png;base64,{graphic}"/>')
-
 def category_chart_view(request):
   try:
     # Fetch and aggregate data by category
@@ -71,3 +52,21 @@ def category_chart_view(request):
   except Exception as e:
     print("Error occurred:", e)  # Print error for debugging
     return HttpResponse("An error occurred while generating the chart.")
+
+
+def searchTable(request):        
+    if request.method == 'GET':   
+        searchBasis=  request.GET.get('searchInput') # do some research what it does       
+        if searchBasis:
+            try:
+              searchedItems = Data.objects.filter(category__icontains=searchBasis) # filter returns a list so you might consider skip except part
+              return render(request,"table/search.html",{"searchedItems":searchedItems})
+            except Exception as e:  # Catch any exceptions that might occur
+            # Handle the exception or log it
+              print("error")
+              return render(request, "table/search.html", {})
+        else: 
+            print("no result found")
+            return render(request, "table/search.html", {})
+    else:
+        return render(request,'table/search.html',{"searchedItems":searchedItems})
