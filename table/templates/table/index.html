@@ -21,9 +21,9 @@
                     </li>
                 {% endif %}
             </ul> {% endcomment %}
-            <a class="navbar-brand btn btn-primary" href="#">Login</a>
+            <a class="navbar-brand btn btn-primary" href="{% url 'login' %}">Login</a>
             <div class="container-fluid">
-                <a class="navbar-brand btn btn-danger" href="#">Signup</a>
+                <a class="navbar-brand btn btn-danger" href="{% url 'signup' %}">Signup</a>
             </div>
             <div class="container-fluid d-flex">
                 {% comment %} <a id="addData" class="navbar-brand btn btn-primary " href="{% url 'addData' %}">Add</a> {% endcomment %}
@@ -57,7 +57,7 @@
                     <a class="nav-link active" aria-current="page" href="{% url 'login' %}">Login</a>
                     </li>
                     <li class="nav-item btn btn-outline-success me-3">
-                    <a class="nav-link" href="{% url 'register' %}">Signup</a>
+                    <a class="nav-link" href="{% url 'signup' %}">Signup</a>
                     </li>
                 </li>
             {% endif %} {% endcomment %}

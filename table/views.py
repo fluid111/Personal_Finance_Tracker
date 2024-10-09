@@ -1,15 +1,20 @@
 import matplotlib
+import matplotlib.pyplot as plt
 matplotlib.use('Agg') 
+import base64
 
-from django.shortcuts import render
+from django.shortcuts import render , redirect
 
 from django.db import models  # Add this line
 
-import matplotlib.pyplot as plt
 from django.http import HttpResponse
 from io import BytesIO
-import base64
 from api.models import Data
+
+from .forms import UserRegistrationForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login
+from django.contrib.auth import logout as auth_logout
 # import urllib, base64
 
 # Create your views here.
@@ -70,3 +75,18 @@ def searchTable(request):
             return render(request, "table/search.html", {})
     else:
         return render(request,'table/search.html',{"searchedItems":searchedItems})
+
+def signup(request):
+    if request.method == 'POST': 
+      form = UserRegistrationForm(request.POST)
+      if form.is_valid():
+        user = form.save(commit=False)
+        user.set_password(form.cleaned_data['password1'])
+        user.save()
+        login(request, user)
+        return redirect('list')
+    #   pass
+    else:
+        form = UserRegistrationForm()
+
+    return render(request, 'registration/signup.html',{'form':form})
