@@ -12,6 +12,7 @@ from io import BytesIO
 from api.models import Data
 
 from .forms import UserRegistrationForm
+# from rest_framework.decorators import api_view
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from django.contrib.auth import logout as auth_logout
@@ -21,6 +22,7 @@ from django.contrib.auth import logout as auth_logout
 def list(request):
     return render(request, 'table/index.html')
 
+@login_required
 def category_chart_view(request):
   try:
     # Fetch and aggregate data by category
@@ -58,7 +60,7 @@ def category_chart_view(request):
     print("Error occurred:", e)  # Print error for debugging
     return HttpResponse("An error occurred while generating the chart.")
 
-
+@login_required
 def searchTable(request):        
     if request.method == 'GET':   
         searchBasis=  request.GET.get('searchInput') # do some research what it does       
@@ -84,9 +86,14 @@ def signup(request):
         user.set_password(form.cleaned_data['password1'])
         user.save()
         login(request, user)
-        return redirect('list')
+        return redirect('')
     #   pass
     else:
         form = UserRegistrationForm()
 
     return render(request, 'registration/signup.html',{'form':form})
+# @API_VIEW['POST']
+# @api_view(['POST'])
+def logout(request):
+    auth_logout(request)
+    return render(request, "registration/loggedout.html")

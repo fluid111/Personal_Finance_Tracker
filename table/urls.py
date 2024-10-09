@@ -11,5 +11,6 @@ urlpatterns = [
     path('search/', searchTable, name='searchTable'),
     # path('add/', views.addData , name= 'addData'),
     path('login/', auth_views.LoginView.as_view(), name='login'),
+    path('logout/', views.logout, name='logout'),
     path('signup/', signup, name='signup'),
 ]
